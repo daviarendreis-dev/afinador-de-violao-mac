@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Afinador de Violão em Tempo Real</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
     <script src="script.js" defer></script>
   </head>
   <body>
@@ -15,80 +15,7 @@
       <!-- Controles -->
       <div class="controls">
         <button id="micBtn" class="btn btn-primary">🎤 Ativar Microfone</button>
-        <button id="autoBtn" class="btn btn-secondary active">
-          Automático
-        </button>
-      </div>
-
-      <!-- Seletor de cordas -->
-      <div class="string-selector" id="stringSelector">
-        <button class="string-btn" data-note="E2" data-freq="82.41">
-          E<span class="note-label">2</span>
-        </button>
-        <button class="string-btn" data-note="A2" data-freq="110.00">
-          A<span class="note-label">2</span>
-        </button>
-        <button class="string-btn" data-note="D3" data-freq="146.83">
-          D<span class="note-label">3</span>
-        </button>
-        <button class="string-btn" data-note="G3" data-freq="196.00">
-          G<span class="note-label">3</span>
-        </button>
-        <button class="string-btn" data-note="B3" data-freq="246.94">
-          B<span class="note-label">3</span>
-        </button>
-        <button class="string-btn" data-note="E4" data-freq="329.63">
-          E<span class="note-label">4</span>
-        </button>
-      </div>
-
-      <!-- Canvas de visualização -->
-      <div class="canvas-wrapper">
-        <canvas id="waveCanvas"></canvas>
-      </div>
-
-      <!-- Leituras -->
-      <div class="readings">
-        <div class="reading-card">
-          <div class="label">Nota</div>
-          <div class="value note" id="noteValue">--</div>
-        </div>
-        <div class="reading-card">
-          <div class="label">Frequência</div>
-          <div class="value" id="freqValue">-- Hz</div>
-        </div>
-        <div class="reading-card">
-          <div class="label">Desvio</div>
-          <div class="value cents" id="centsValue">-- ¢</div>
-        </div>
-      </div>
-
-      <!-- Barra de afinação -->
-      <div class="tuner-bar-container">
-        <div class="tuner-bar">
-          <div class="center-mark"></div>
-          <div
-            class="indicator"
-            id="indicator"
-            style="left: 50%; background: #444; color: #444"
-          ></div><!doctype html>
-<html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Afinador de Violão em Tempo Real</title>
-  </head>
-  <body>
-    <div class="container">
-      <h1>Afinador de Violão</h1>
-      <p class="subtitle">Tempo Real · Web Audio API</p>
-
-      <!-- Controles -->
-      <div class="controls">
-        <button id="micBtn" class="btn btn-primary">🎤 Ativar Microfone</button>
-        <button id="autoBtn" class="btn btn-secondary active">
-          Automático
-        </button>
+        <button id="autoBtn" class="btn btn-secondary active">Automático</button>
       </div>
 
       <!-- Seletor de cordas -->
@@ -143,19 +70,6 @@
             id="indicator"
             style="left: 50%; background: #444; color: #444"
           ></div>
-        </div>
-        <div class="tuner-labels">
-          <span>♭ -50¢</span>
-          <span>0¢</span>
-          <span>+50¢ ♯</span>
-        </div>
-      </div>
-
-      <div class="status-text idle" id="statusText">Aguardando áudio...</div>
-    </div>
-  </body>
-</html>
-
         </div>
         <div class="tuner-labels">
           <span>♭ -50¢</span>

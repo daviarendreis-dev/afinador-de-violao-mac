@@ -355,7 +355,6 @@ class WaveRenderer {
       // Usar a forma de onda real capturada para renderização
       // Normalizar e desenhar as amostras diretamente
       const buffer = sampleBuffer;
-      const step = Math.max(1, Math.floor(buffer.length / W));
 
       // Detectar cor baseada na proximidade
       let color, shadowColor;
@@ -483,7 +482,6 @@ class TunerApp {
           this.autoBtn.textContent = "Manual";
         }
         const note = btn.dataset.note;
-        const freq = parseFloat(btn.dataset.freq);
         const str = STRINGS.find((s) => s.note === note);
         if (str) this.selectString(str);
       });
@@ -493,6 +491,23 @@ class TunerApp {
   selectString(str) {
     this.selectedString = str;
     this.updateStringButtons();
+
+    // Re-renderizar imediatamente com a nova corda alvo
+    if (!this.isRunning) {
+      // Microfone desligado: renderizar apenas a onda alvo
+      this.renderIdle();
+    } else {
+      // Microfone ligado: re-renderizar com onda alvo + onda capturada
+      const buffer = this.audio.getSamples();
+      const sampleRate = this.audio.getSampleRate();
+      this.renderer.render(
+        this.selectedString.freq,
+        this.currentFreq,
+        this.currentRms,
+        buffer,
+        sampleRate,
+      );
+    }
   }
 
   updateStringButtons() {
@@ -559,13 +574,14 @@ class TunerApp {
     this.indicator.style.color = "#444";
   }
 
+  // ✅ ÚNICO renderIdle — com fallback para sampleRate
   renderIdle() {
     this.renderer.render(
       this.selectedString.freq,
       0,
       0,
       null,
-      this.audio.getSampleRate(),
+      this.audio.getSampleRate() || 44100,
     );
   }
 
