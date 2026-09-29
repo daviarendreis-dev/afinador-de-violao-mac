@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Afinador de Violão Web</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <main class="tuner-container">
+      <header>
+        <h1>Afinador de Violão Web</h1>
+        <p>Afinador harmônico em tempo real via Web Audio API</p>
+      </header>
+
+      <section class="controls">
+        <button id="startBtn">Iniciar Microfone</button>
+        <select id="stringSelect">
+          <option value="auto">Modo Automático</option>
+          <option value="E2">6ª Corda - E2 (82.41 Hz)</option>
+          <option value="A2">5ª Corda - A2 (110.00 Hz)</option>
+          <option value="D3">4ª Corda - D3 (146.83 Hz)</option>
+          <option value="G3">3ª Corda - G3 (196.00 Hz)</option>
+          <option value="B3">2ª Corda - B3 (246.94 Hz)</option>
+          <option value="E4">1ª Corda - E4 (329.63 Hz)</option>
+        </select>
+      </section>
+
+      <section class="display-panel">
+        <div id="noteDisplay" class="note-name">--</div>
+        <div id="freqDisplay" class="freq-info">0.00 Hz</div>
+        <div id="centsDisplay" class="cents-indicator">Aguardando áudio...</div>
+      </section>
+
+      <section class="canvas-container">
+        <canvas id="waveCanvas"></canvas>
+      </section>
+
+      <footer class="legend">
+        <div class="legend-item">
+          <span class="dot ideal"></span> Onda Alvo ($y_{alvo}$)
+        </div>
+        <div class="legend-item">
+          <span class="dot actual"></span> Onda Capturada ($y_{atual}$)
+        </div>
+      </footer>
+    </main>
+  </body>
+</html>

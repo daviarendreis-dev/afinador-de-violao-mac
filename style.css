@@ -1,0 +1,157 @@
+:root {
+  --bg-color: #121214;
+  --card-bg: #202024;
+  --accent-color: #00e676; /* Verde - Afinado */
+  --actual-wave: #ff9100; /* Laranja - Onda Real */
+  --text-main: #e1e1e6;
+  --text-muted: #a8a8b3;
+  --font-family: system-ui, -apple-system, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  font-family: var(--font-family);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.tuner-container {
+  background-color: var(--card-bg);
+  border-radius: 16px;
+  padding: 24px;
+  width: 100%;
+  max-width: 600px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  text-align: center;
+}
+
+header h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+header p {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.controls {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+button {
+  background-color: var(--accent-color);
+  color: #000;
+  border: none;
+  padding: 12px 20px;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+select {
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  border: 1px solid #323238;
+  padding: 12px;
+  border-radius: 8px;
+  outline: none;
+  font-size: 0.95rem;
+}
+
+.display-panel {
+  background-color: var(--bg-color);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.note-name {
+  font-size: 3.5rem;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--accent-color);
+}
+
+.freq-info {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+}
+
+.cents-indicator {
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 20px;
+  background-color: #29292e;
+  margin-top: 4px;
+}
+
+.canvas-container {
+  position: relative;
+  width: 100%;
+  height: 180px;
+  background-color: var(--bg-color);
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #29292e;
+}
+
+canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.legend {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.dot.ideal {
+  background-color: var(--accent-color);
+}
+.dot.actual {
+  background-color: var(--actual-wave);
+}
