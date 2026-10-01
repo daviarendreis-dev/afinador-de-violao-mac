@@ -476,3 +476,301 @@ canvas {
     padding-bottom: max(8px, env(safe-area-inset-bottom));
   }
 }
+
+/* ===== PRESET / A4 ===== */
+.preset-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: clamp(6px, 1.5vw, 12px);
+  width: 100%;
+}
+
+.preset-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.preset-field label {
+  font-size: clamp(0.6rem, 1.7vw, 0.75rem);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #666;
+}
+
+.select-input,
+.number-input {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  padding: clamp(8px, 1.5vh, 10px) clamp(10px, 2vw, 14px);
+  color: #e0e0e0;
+  font-size: clamp(0.8rem, 2.2vw, 0.95rem);
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.select-input {
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 16px;
+  padding-right: 34px;
+}
+
+.select-input:focus,
+.number-input:focus {
+  outline: none;
+  border-color: #00c6ff;
+  background: rgba(0, 198, 255, 0.08);
+}
+
+.select-input option {
+  background: #1a1a2e;
+  color: #e0e0e0;
+}
+
+.number-input::-webkit-outer-spin-button,
+.number-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.number-input {
+  -moz-appearance: textfield;
+  text-align: center;
+}
+
+/* ===== BOTÃO "SÓ UMA CORDA" ===== */
+#singleStringBtn.active {
+  background: rgba(255, 165, 0, 0.2);
+  border-color: #ffa500;
+  color: #ffa500;
+}
+
+/* ===== SELECTOR DE CORDAS COM 12 COLUNAS (para presets de 4-6 cordas) ===== */
+.string-selector {
+  grid-template-columns: repeat(auto-fit, minmax(44px, 1fr));
+  justify-content: center;
+}
+
+/* ===== RESPONSIVO ===== */
+@media (max-width: 480px) {
+  .preset-row {
+    grid-template-columns: 1.5fr 1fr;
+  }
+  .string-selector {
+    grid-template-columns: repeat(auto-fit, minmax(38px, 1fr));
+  }
+}
+
+@media (max-width: 380px) {
+  .preset-row {
+    grid-template-columns: 1fr 1fr;
+  }
+  .string-selector {
+    grid-template-columns: repeat(auto-fit, minmax(34px, 1fr));
+  }
+}
+
+/* ===== METRÔNOMO ===== */
+.metronome-panel {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  overflow: hidden;
+  transition: background 0.2s ease;
+}
+
+.metronome-panel[open] {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.metronome-panel summary {
+  list-style: none;
+  cursor: pointer;
+  padding: clamp(10px, 1.8vh, 14px) clamp(12px, 2.5vw, 18px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: clamp(0.85rem, 2.2vw, 1rem);
+  font-weight: 600;
+  color: #ccc;
+  letter-spacing: 1px;
+  user-select: none;
+  transition: color 0.2s ease;
+}
+
+.metronome-panel summary::-webkit-details-marker {
+  display: none;
+}
+
+.metronome-panel summary::after {
+  content: "▸";
+  display: inline-block;
+  margin-left: 10px;
+  transition: transform 0.2s ease;
+  color: #666;
+  font-size: 0.9em;
+}
+
+.metronome-panel[open] summary::after {
+  transform: rotate(90deg);
+}
+
+.metronome-panel summary:hover {
+  color: #fff;
+}
+
+.bpm-display {
+  font-variant-numeric: tabular-nums;
+  color: #00c6ff;
+  font-size: 0.9em;
+  font-weight: 700;
+  margin-left: auto;
+  padding-right: 8px;
+}
+
+.metronome-body {
+  padding: 0 clamp(12px, 2.5vw, 18px) clamp(12px, 2vh, 16px);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(8px, 1.5vh, 12px);
+}
+
+.metronome-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: clamp(6px, 1.5vw, 12px);
+  align-items: center;
+}
+
+.metronome-row label {
+  font-size: clamp(0.65rem, 1.8vw, 0.8rem);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #666;
+  white-space: nowrap;
+}
+
+.bpm-range {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 3px;
+  outline: none;
+  cursor: pointer;
+}
+
+.bpm-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
+  cursor: pointer;
+  box-shadow: 0 0 12px rgba(0, 198, 255, 0.5);
+  transition: transform 0.15s ease;
+}
+
+.bpm-range::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+}
+
+.bpm-range::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 0 12px rgba(0, 198, 255, 0.5);
+}
+
+.bpm-number {
+  width: 60px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  padding: 6px 8px;
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-align: center;
+  font-family: inherit;
+  -moz-appearance: textfield;
+}
+
+.bpm-number::-webkit-outer-spin-button,
+.bpm-number::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.bpm-number:focus {
+  outline: none;
+  border-color: #00c6ff;
+}
+
+.metronome-play {
+  padding: 8px 16px !important;
+  font-size: 0.8rem !important;
+  white-space: nowrap;
+}
+
+.metronome-play.active {
+  background: linear-gradient(135deg, #ff416c, #ff4b2b) !important;
+  border-color: #ff4b2b !important;
+  color: #fff !important;
+  box-shadow: 0 4px 15px rgba(255, 75, 43, 0.4);
+}
+
+/* Indicador de batidas */
+.beat-indicator {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 0 4px;
+}
+
+.beat-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  transition: background 0.08s ease, transform 0.08s ease,
+    border-color 0.08s ease, box-shadow 0.08s ease;
+}
+
+.beat-dot.active {
+  background: #00c6ff;
+  border-color: #00c6ff;
+  transform: scale(1.4);
+  box-shadow: 0 0 16px rgba(0, 198, 255, 0.8);
+}
+
+.beat-dot.active.accent {
+  background: #ffa500;
+  border-color: #ffa500;
+  box-shadow: 0 0 20px rgba(255, 165, 0, 0.9);
+}
+
+@media (max-width: 480px) {
+  .beat-dot {
+    width: 12px;
+    height: 12px;
+  }
+  .bpm-number {
+    width: 52px;
+    font-size: 0.8rem;
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "name": "Afinador de Violão em Tempo Real",
+  "short_name": "Afinador",
+  "description": "Afinador cromático com detecção em tempo real via Web Audio API",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#0a0a0f",
+  "background_color": "#0a0a0f",
+  "lang": "pt-BR"
+}

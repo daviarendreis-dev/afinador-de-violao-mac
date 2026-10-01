@@ -2,43 +2,57 @@
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>Afinador de Violão em Tempo Real</title>
+
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json" />
+    <meta name="theme-color" content="#0a0a0f" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Afinador" />
+
+    <!-- Favicon inline (SVG emoji, sem arquivo externo) -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎸</text></svg>" />
+
     <link rel="stylesheet" href="style.css" />
     <script src="script.js" defer></script>
-  </head>
-  <body>
+</head>  <body>
     <div class="container">
       <h1>Afinador de Violão</h1>
       <p class="subtitle">Tempo Real · Web Audio API</p>
 
-      <!-- Controles -->
+      <!-- Preset de afinação + A4 -->
+      <div class="preset-row">
+        <div class="preset-field">
+          <label for="presetSelect">Afinação</label>
+          <select id="presetSelect" class="select-input"></select>
+        </div>
+        <div class="preset-field">
+          <label for="a4Input">A4 (Hz)</label>
+          <input
+            id="a4Input"
+            type="number"
+            class="number-input"
+            min="415"
+            max="445"
+            step="1"
+            value="440"
+          />
+        </div>
+      </div>
+
+      <!-- Controles principais -->
       <div class="controls">
         <button id="micBtn" class="btn btn-primary">🎤 Ativar Microfone</button>
         <button id="autoBtn" class="btn btn-secondary active">Automático</button>
+        <button id="singleStringBtn" class="btn btn-secondary" title="Ignorar sons fora da corda selecionada">
+          🎯 Só Uma Corda
+        </button>
       </div>
 
-      <!-- Seletor de cordas -->
-      <div class="string-selector" id="stringSelector">
-        <button class="string-btn" data-note="E2" data-freq="82.41">
-          E<span class="note-label">2</span>
-        </button>
-        <button class="string-btn" data-note="A2" data-freq="110.00">
-          A<span class="note-label">2</span>
-        </button>
-        <button class="string-btn" data-note="D3" data-freq="146.83">
-          D<span class="note-label">3</span>
-        </button>
-        <button class="string-btn" data-note="G3" data-freq="196.00">
-          G<span class="note-label">3</span>
-        </button>
-        <button class="string-btn" data-note="B3" data-freq="246.94">
-          B<span class="note-label">3</span>
-        </button>
-        <button class="string-btn" data-note="E4" data-freq="329.63">
-          E<span class="note-label">4</span>
-        </button>
-      </div>
+      <!-- Seletor de cordas (gerado por JS) -->
+      <div class="string-selector" id="stringSelector"></div>
 
       <!-- Canvas de visualização -->
       <div class="canvas-wrapper">
@@ -77,6 +91,51 @@
           <span>+50¢ ♯</span>
         </div>
       </div>
+            <!-- Metrônomo -->
+      <details class="metronome-panel">
+        <summary>
+          <span>🥁 Metrônomo</span>
+          <span class="bpm-display" id="bpmDisplay">120 BPM</span>
+        </summary>
+        <div class="metronome-body">
+          <div class="metronome-row">
+            <label for="bpmRange">BPM</label>
+            <input
+              id="bpmRange"
+              type="range"
+              min="40"
+              max="240"
+              value="120"
+              step="1"
+              class="bpm-range"
+            />
+            <input
+              id="bpmInput"
+              type="number"
+              min="40"
+              max="240"
+              value="120"
+              class="bpm-number"
+            />
+          </div>
+
+          <div class="metronome-row">
+            <label for="timeSigSelect">Compasso</label>
+            <select id="timeSigSelect" class="select-input">
+              <option value="2/4">2/4</option>
+              <option value="3/4">3/4</option>
+              <option value="4/4" selected>4/4</option>
+              <option value="6/8">6/8</option>
+            </select>
+            <button id="metronomeBtn" class="btn btn-secondary metronome-play">
+              ▶ Iniciar
+            </button>
+          </div>
+
+          <!-- Indicador visual de tempos -->
+          <div class="beat-indicator" id="beatIndicator"></div>
+        </div>
+      </details>
 
       <div class="status-text idle" id="statusText">Aguardando áudio...</div>
     </div>
