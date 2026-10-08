@@ -599,21 +599,10 @@ class WaveRenderer {
       ctx.shadowColor = shadowColor;
       ctx.shadowBlur = 10;
 
-      const buffer = sampleBuffer;
-      const samplesInWindow = Math.min(
-        buffer.length,
-        Math.floor(sampleRate * 0.02),
-      );
-
-      let maxVal = 0.001;
-      for (let i = 0; i < samplesInWindow; i++) {
-        maxVal = Math.max(maxVal, Math.abs(buffer[i]));
-      }
-
+      const windowTime = 0.02;
       for (let px = 0; px < W; px++) {
-        const idx = Math.floor((px / W) * samplesInWindow);
-        const sample = buffer[idx] / maxVal;
-        const y = sample * amplitude;
+        const t = (px / W) * windowTime;
+        const y = amplitude * Math.sin(2 * Math.PI * detectedFreq * t);
         const canvasY = centerY - y;
         if (px === 0) ctx.moveTo(px, canvasY);
         else ctx.lineTo(px, canvasY);
@@ -838,6 +827,7 @@ class TunerApp {
     this.animationId = null;
     this.smoothingFreq = 0;
     this.detectedNote = null;
+    this.isTuned = false;
     this.wasRunningBeforeHidden = false;
 
     // Estado do metrônomo
@@ -1232,6 +1222,7 @@ class TunerApp {
       this.micBtn.disabled = true;
       await this.audio.start();
       this.isRunning = true;
+      this.isTuned = false;
       this.micBtn.textContent = "⏹ Parar Microfone";
       this.micBtn.classList.add("active");
       this.micBtn.disabled = false;
@@ -1291,6 +1282,7 @@ class TunerApp {
     this.currentFreq = 0;
     this.smoothingFreq = 0;
     this.detectedNote = null;
+    this.isTuned = false;
     this.wasRunningBeforeHidden = false;
     this.renderIdle();
     this.resetReadings();
@@ -1304,6 +1296,20 @@ class TunerApp {
     this.indicator.style.left = "50%";
     this.indicator.style.background = "#444";
     this.indicator.style.color = "#444";
+  }
+
+  finishTuning() {
+    if (this.isTuned) return;
+    this.isTuned = true;
+    this.isRunning = false;
+    if (this.animationId) {
+      cancelAnimationFrame(this.animationId);
+      this.animationId = null;
+    }
+    this.audio.stop();
+    this.micBtn.textContent = "🎤 Ativar Microfone";
+    this.micBtn.classList.remove("active");
+    this.micBtn.disabled = false;
   }
 
   renderIdle() {
@@ -1408,11 +1414,12 @@ class TunerApp {
         (cents > 0 ? "+" : "") + cents + " ¢";
 
       const noteMismatch = detected.note !== target.note;
+      const isInTune = !noteMismatch && Math.abs(cents) < 5;
 
       this.centsValue.className = "value cents";
       if (noteMismatch) {
         this.centsValue.classList.add(cents < 0 ? "flat" : "sharp");
-      } else if (Math.abs(cents) < 5) {
+      } else if (isInTune) {
         this.centsValue.classList.add("tuned");
       } else if (cents < 0) {
         this.centsValue.classList.add("flat");
@@ -1432,11 +1439,13 @@ class TunerApp {
           "status-text " + (cents < 0 ? "flat" : "sharp");
         this.indicator.style.background = cents < 0 ? "#ffa500" : "#ff4b2b";
         this.indicator.style.color = cents < 0 ? "#ffa500" : "#ff4b2b";
-      } else if (Math.abs(cents) < 5) {
+      } else if (isInTune) {
         this.indicator.style.background = "#00e676";
         this.indicator.style.color = "#00e676";
-        this.statusText.textContent = "✓ Afinado";
+        this.statusText.textContent = "Parabens! Seu violao esta afinado";
         this.statusText.className = "status-text tuned";
+        this.finishTuning();
+        return;
       } else if (cents < 0) {
         this.indicator.style.background = "#ffa500";
         this.indicator.style.color = "#ffa500";
